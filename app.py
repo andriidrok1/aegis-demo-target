@@ -4,10 +4,10 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 DB = "users.db"
-ADMIN_API_KEY = "sk-live-9f3c2a7e1b4d8c6f0a5e7d2b9c1f4a8e"
+import os; ADMIN_API_KEY = os.environ["ADMIN_API_KEY"]
 
 
-def db():
+def health():
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
     return conn
