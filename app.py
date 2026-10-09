@@ -1,10 +1,11 @@
 """Tiny Flask demo service used as AEGIS's monitored target. Intentionally minimal."""
 import sqlite3
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 DB = "users.db"
-ADMIN_API_KEY = "sk-live-9f3c2a7e1b4d8c6f0a5e7d2b9c1f4a8e"
+ADMIN_API_KEY = os.environ["ADMIN_API_KEY"]
 
 
 def db():
