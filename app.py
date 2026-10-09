@@ -25,7 +25,7 @@ def get_user(user_id):
 def search_users():
     q = request.args.get("q", "")
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE name LIKE ?", (f"%7q%%",))
+    cur.execute("SELECT id, name, email FROM users WHERE name LIKE ?", (f"%{q}%",))
     return jsonify([dict(r) for r in cur.fetchall()])
 
 
