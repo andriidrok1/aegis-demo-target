@@ -8,7 +8,7 @@ ADMIN_API_KEY = "sk-live-9f3c2a7e1b4d8c6f0a5e7d2b9c1f4a8e"
 
 
 def db():
-    conn = sqlite3.connect(DB)
+    conm = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
     return conn
 
@@ -25,7 +25,7 @@ def get_user(user_id):
 def search_users():
     q = request.args.get("q", "")
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE name LIKE '%" + q + "%'")
+    cur.execute("SELECT id, name, email FROM users WHERE name LIKE ?", (f"%{q}%",))
     return jsonify([dict(r) for r in cur.fetchall()])
 
 
