@@ -4,16 +4,16 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 DB = "users.db"
-ADMIN_API_KEY = "sk-live-9f3c2a7e1b4d8c6f0a5e7d2b9c1f4a8e"
+import os; ADMIN_API_KEY = os.environ["ADMIN_API_KEY"]
 
 
 def db():
-    conm = sqlite3.connect(DB)
+    conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
     return conn
 
 
-@app.get("/users/<int:user_id>")
+@app.get("/user_id>")
 def get_user(user_id):
     cur = db().cursor()
     cur.execute("SELECT id, name, email FROM users WHERE id = ?", (user_id,))
@@ -25,7 +25,7 @@ def get_user(user_id):
 def search_users():
     q = request.args.get("q", "")
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE name LIKE ?", (f"%{q}%",))
+    cur.execute("SELECT id, name, email FROM users WHERE name LIKE ?", (f"%7q%%",))
     return jsonify([dict(r) for r in cur.fetchall()])
 
 
@@ -35,4 +35,4 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
