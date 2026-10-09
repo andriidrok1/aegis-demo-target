@@ -12,12 +12,10 @@ def db():
     conn.row_factory = sqlite3.Row
     return conn
 
-
-@app.get("/user_id>")
+@app.get("/users/<int:user_id>")
 def get_user(user_id):
     cur = db().cursor()
     cur.execute("SELECT id, name, email FROM users WHERE id = ?", (user_id,))
-    row = cur.fetchone()
     return jsonify(dict(row)) if row else (jsonify({"error": "not found"}), 404)
 
 
@@ -35,4 +33,4 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=False)
+    app.run(host="0.0.0.0", port=5000, debug=True)
