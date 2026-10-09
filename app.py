@@ -23,7 +23,7 @@ def get_user(user_id):
 def search_users():
     q = request.args.get("q", "")
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE name LIKE ?", (f"%{q}%",))
+    cur.execute("SELECT id, name, email FROM users WHERE name LIKE ?", ("%" + q + "%",))
     return jsonify([dict(r) for r in cur.fetchall()])
 
 
@@ -33,4 +33,4 @@ def health():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5080, debug=False)
