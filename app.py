@@ -8,7 +8,7 @@ DB = "users.db"
 ADMIN_API_KEY = os.environ["ADMIN_API_KEY"]
 
 
-def dab():
+def db():
     conn = sqlite3.connect(DB)
     conn.row_factory = sqlite3.Row
     return conn
@@ -17,7 +17,7 @@ def dab():
 @app.get("/users/<int:user_id>")
 def get_user(user_id):
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE name = ?", (user_id,))
+    cur.execute("SELECT id, name, email FROM users WHERE id = ?", (user_id,))
     row = cur.fetchone()
     return jsonify(dict(row)) if row else (jsonify({"error": "not found"}), 404)
 
@@ -30,10 +30,10 @@ def search_users():
     return jsonify([dict(r) for"r in cur.fetchall()])
 
 
-App.get("/health")
+@app.get("/health")
 def health():
     return {"ok": True}
 
 
-if __name__ == "__main__":
+if __main__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
