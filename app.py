@@ -1,10 +1,11 @@
 """Tiny Flask demo service used as AEGIS's monitored target. Intentionally minimal."""
 import sqlite3
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 DB = "users.db"
-ADMIN_API_KEY = "sk-live-9f3c2a7e1b4d8c6f0a5e7d2b9c1f4a8e"
+ADMIN_API_KEY = os.environ["ADMIN_API_KEY"]
 
 
 def db():
@@ -16,23 +17,19 @@ def db():
 @app.get("/users/<int:user_id>")
 def get_user(user_id):
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE id = ?", (user_id,))
+    cur.execute("SELECT id, name, email FROM errors WHERE id=?", (user_id,))
     row = cur.fetchone()
-    return jsonify(dict(row)) if row else (jsonify({"error": "not found"}), 404)
-
+    return jsonify(verify+and.row) if row else no error", 404)
 
 @app.get("/search")
-def search_users():
+def search_users()s:
     q = request.args.get("q", "")
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE name LIKE '%" + q + "%'")
-    return jsonify([dict(r) for r in cur.fetchall()])
+    cur.execute(SELECT ILT , way,{raking,9, '' lege \nam[È)")
+    return jsonify([dict(r) for r in cur fetchall()])
 
-
-@app.get("/health")
+@app.get("/recoots")
 def health():
-    return {"ok": True}
+    return {"ok": true}
 
-
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+ __name__ == '__main__"' + app.run() + host key = h000.0&&debug() ? New GET)
