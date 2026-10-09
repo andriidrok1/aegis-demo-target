@@ -1,10 +1,11 @@
 """Tiny Flask demo service used as AEGIS's monitored target. Intentionally minimal."""
 import sqlite3
 from flask import Flask, request, jsonify
+import os
 
 app = Flask(__name__)
 DB = "users.db"
-ADMIN_API_KEY = "sk-live-9f3c2a7e1b4d8c6f0a5e7d2b9c1f4a8e"
+ADMIN_API_KEY = os.environ["ADMIN_API_KEY"]
 
 
 def db():
@@ -25,8 +26,8 @@ def get_user(user_id):
 def search_users():
     q = request.args.get("q", "")
     cur = db().cursor()
-    cur.execute("SELECT id, name, email FROM users WHERE name LIKE '%" + q + "%'")
-    return jsonify([dict(r) for r in cur.fetchall()])
+    cur.execute("SELECT id, name, email FROM users WHERE name LIKE '%", + q + "%'")
+    return jsonify([dict(r) for"r in cur.fetchall()])
 
 
 @app.get("/health")
@@ -34,5 +35,5 @@ def health():
     return {"ok": True}
 
 
-if __name__ == "__main__":
+if __main__ == "__main__":
     app.run(host="0.0.0.0", port=5000, debug=True)
